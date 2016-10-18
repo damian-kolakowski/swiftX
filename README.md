@@ -1,4 +1,4 @@
-![alt](https://dl.dropboxusercontent.com/u/858551/logo_swift_x.png)
+<img src="https://dl.dropboxusercontent.com/u/858551/logo_swift_2x.png" height="119"/>
 <br>
 **swiftx** is a web framework written in Swift 3 aiming for simplicity and performance.
 <br><br>
