@@ -1,0 +1,89 @@
+#!/usr/bin/python
+
+# A simple script for building and deploying artifacts to Digital Ocean.
+# Droplet must be 'Ubuntu 16.04.1 x64'.
+
+import os
+import sys
+import subprocess
+
+if len(sys.argv) < 3:
+	print "Not enough parameters."
+	print "Example usage: ./.deploy_into_digital_ocean root@139.26.111.100 8080"
+	quit()
+
+credentails = sys.argv[1]
+port = sys.argv[2]
+
+swiftc_path = subprocess.check_output("which swiftc", shell=True)
+
+head, tail = os.path.split(swiftc_path.rstrip())
+root, tail = os.path.split(head)
+shared = os.path.join(root, "lib", "swift", "linux")
+
+if not os.path.isdir(shared):
+	print "Shared objects directory not found at: " + shared
+	quit()
+
+print "Found shared objects directory: " + shared
+print "Building project..."
+
+try:
+	subprocess.check_output("swift build -v -c release -Xlinker -rpath -Xlinker .", shell=True)
+except:
+	quit()
+
+print 'Build ok.'
+print 'Checking SSH connection...'
+
+try:
+	subprocess.check_output("ssh " + credentails + " 'pwd'", shell=True)
+except:
+	print "Unexpected error:", sys.exc_info()
+	quit()
+
+print 'Installing libcurl4-openssl-dev...'
+
+try:
+	subprocess.check_output("ssh " + credentails + " 'sudo apt-get -y install libcurl4-openssl-dev'", shell=True)
+except:
+	print "Unexpected error:", sys.exc_info()
+	quit()
+
+print 'Checking if service is on...'
+
+try:
+	pid = subprocess.check_output('ssh ' + credentails + " 'lsof -t -i:" + port + "'" , stderr=subprocess.STDOUT, shell=True).rstrip()
+	print "Service found PID = " + pid
+	subprocess.check_output('ssh ' + credentails + " 'kill -9 $(lsof -t -i:" + port + ")'", stderr=subprocess.STDOUT, shell=True).rstrip()
+	print "Service killed."
+except subprocess.CalledProcessError, e:
+	if e.returncode == 1:
+		print "Service not found on port: " + str(port) + ". No restart needed."
+	else:
+		print "Unexpected error:", sys.exc_info()
+		print e.output
+		quit()
+
+print "Syncing Swift core shared objects..."
+
+try:
+	subprocess.check_output("rsync -avz " + os.path.join(shared, "*") + " " + credentails +":/home/swiftx", stderr=subprocess.STDOUT, shell=True)
+except:
+	quit()
+
+print "Sending release artifact..."
+
+try:
+	subprocess.check_output("scp .build/release/swiftX " + credentails +":/home/swiftx/release", shell=True)
+except:
+	quit()
+
+print "Starting server..."
+
+try:
+	subprocess.check_output("ssh " + credentails + " /home/swiftx/release < /dev/null > /tmp/swiftx_log 2>&1 &", shell=True)
+except:
+	quit()
+
+print "Server is running."
