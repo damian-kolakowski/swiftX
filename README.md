@@ -6,6 +6,7 @@
 * It has zero external dependencies (fast compilation).
 * It uses `poll & kqueue` sys calls (asynchronous io).
 <br><br>
+(don't worry about [swifter](https://github.com/httpswift/swifter). it's all good. swiftx will be merged with swifter).
 
 ### Getting started
 ```swift
