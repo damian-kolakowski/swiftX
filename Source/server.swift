@@ -9,7 +9,7 @@ import Foundation
 
 public class Server {
     
-    private var processors = [Int32 : IncomingDataPorcessor]()
+    private var processors = [Int32 : IncomingDataProcessor]()
     
     private let server: TcpServer
     
@@ -89,7 +89,7 @@ public class Server {
     }
 }
 
-public protocol IncomingDataPorcessor {
+public protocol IncomingDataProcessor {
     
     func process(_ chunk: ArraySlice<UInt8>) throws
 }

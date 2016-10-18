@@ -9,10 +9,10 @@ import subprocess
 
 if len(sys.argv) < 3:
 	print "Not enough parameters."
-	print "Example usage: ./.deploy_into_digital_ocean root@139.26.111.100 8080"
+	print "Example usage: ./deploy_into_digital_ocean <address> <port>"
 	quit()
 
-credentails = sys.argv[1]
+credentials = sys.argv[1]
 port = sys.argv[2]
 
 swiftc_path = subprocess.check_output("which swiftc", shell=True)
@@ -37,7 +37,7 @@ print 'Build ok.'
 print 'Checking SSH connection...'
 
 try:
-	subprocess.check_output("ssh " + credentails + " 'pwd'", shell=True)
+	subprocess.check_output("ssh " + credentials + " 'pwd'", shell=True)
 except:
 	print "Unexpected error:", sys.exc_info()
 	quit()
@@ -45,7 +45,7 @@ except:
 print 'Installing libcurl4-openssl-dev...'
 
 try:
-	subprocess.check_output("ssh " + credentails + " 'sudo apt-get -y install libcurl4-openssl-dev'", shell=True)
+	subprocess.check_output("ssh " + credentials + " 'sudo apt-get -y install libcurl4-openssl-dev'", shell=True)
 except:
 	print "Unexpected error:", sys.exc_info()
 	quit()
@@ -53,9 +53,9 @@ except:
 print 'Checking if service is on...'
 
 try:
-	pid = subprocess.check_output('ssh ' + credentails + " 'lsof -t -i:" + port + "'" , stderr=subprocess.STDOUT, shell=True).rstrip()
+	pid = subprocess.check_output('ssh ' + credentials + " 'lsof -t -i:" + port + "'" , stderr=subprocess.STDOUT, shell=True).rstrip()
 	print "Service found PID = " + pid
-	subprocess.check_output('ssh ' + credentails + " 'kill -9 $(lsof -t -i:" + port + ")'", stderr=subprocess.STDOUT, shell=True).rstrip()
+	subprocess.check_output('ssh ' + credentials + " 'kill -9 $(lsof -t -i:" + port + ")'", stderr=subprocess.STDOUT, shell=True).rstrip()
 	print "Service killed."
 except subprocess.CalledProcessError, e:
 	if e.returncode == 1:
@@ -68,21 +68,21 @@ except subprocess.CalledProcessError, e:
 print "Syncing Swift core shared objects..."
 
 try:
-	subprocess.check_output("rsync -avz " + os.path.join(shared, "*") + " " + credentails +":/home/swiftx", stderr=subprocess.STDOUT, shell=True)
+	subprocess.check_output("rsync -avz " + os.path.join(shared, "*") + " " + credentials +":/home/swiftx", stderr=subprocess.STDOUT, shell=True)
 except:
 	quit()
 
 print "Sending release artifact..."
 
 try:
-	subprocess.check_output("scp .build/release/swiftX " + credentails +":/home/swiftx/release", shell=True)
+	subprocess.check_output("scp .build/release/swiftX " + credentials +":/home/swiftx/release", shell=True)
 except:
 	quit()
 
 print "Starting server..."
 
 try:
-	subprocess.check_output("ssh " + credentails + " /home/swiftx/release < /dev/null > /tmp/swiftx_log 2>&1 &", shell=True)
+	subprocess.check_output("ssh " + credentials + " /home/swiftx/release < /dev/null > /tmp/swiftx_log 2>&1 &", shell=True)
 except:
 	quit()
 

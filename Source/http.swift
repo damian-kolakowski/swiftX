@@ -62,7 +62,7 @@ public class Response {
     
     public var body = [UInt8]()
     
-    public var processingSuccesor: IncomingDataPorcessor? = nil
+    public var processingSuccesor: IncomingDataProcessor? = nil
 }
 
 public class TextResponse: Response {
@@ -91,7 +91,7 @@ public enum Status: Int {
     case notFound = 404
 }
 
-public class HttpIncomingDataPorcessor: Hashable, IncomingDataPorcessor {
+public class HttpIncomingDataPorcessor: Hashable, IncomingDataProcessor {
     
     private enum State {
         case waitingForHeaders

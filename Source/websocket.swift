@@ -97,7 +97,7 @@ public class WebsocketFramesProcessor {
     }
 }
 
-public class WebsocketDataPorcessor: IncomingDataPorcessor {
+public class WebsocketDataPorcessor: IncomingDataProcessor {
 
     private let framesProcessor: WebsocketFramesProcessor
     

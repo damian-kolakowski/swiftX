@@ -10,10 +10,10 @@ import subprocess
 
 if len(sys.argv) < 4:
 	print "Not enough parameters."
-	print "Example: ./.deploy_into_amazon_ec2 ubuntu@ec2-XX-XX.compute.amazonaws.com 8080 my_ec2_instance.pem"
+	print "Example: ./deploy_into_amazon_ec2 <address> <port> <private key>"
 	quit()
 
-credentails = sys.argv[1]
+credentials = sys.argv[1]
 port = sys.argv[2]
 pem_file = sys.argv[3]
 
@@ -39,7 +39,7 @@ print "Build ok."
 print 'Checking SSH connection...'
 
 try:
-	subprocess.check_output('ssh -i "' + pem_file + '" ' + credentails + " 'pwd'", shell=True)
+	subprocess.check_output('ssh -i "' + pem_file + '" ' + credentials + " 'pwd'", shell=True)
 except:
 	print "Unexpected error:", sys.exc_info()
 	quit()
@@ -47,7 +47,7 @@ except:
 print 'Installing libcurl4-openssl-dev (it can take some time)...'
 
 try:
-	subprocess.check_output('ssh -i "' + pem_file + '" ' + credentails + " 'sudo apt-get -y install libcurl4-openssl-dev'", shell=True)
+	subprocess.check_output('ssh -i "' + pem_file + '" ' + credentials + " 'sudo apt-get -y install libcurl4-openssl-dev'", shell=True)
 except:
 	print "Unexpected error:", sys.exc_info()
 	quit()
@@ -55,9 +55,9 @@ except:
 print 'Checking if service is on...'
 
 try:
-	pid = subprocess.check_output('ssh -i "' + pem_file + '" ' + credentails + " 'lsof -t -i:" + port + "'" , stderr=subprocess.STDOUT, shell=True).rstrip()
+	pid = subprocess.check_output('ssh -i "' + pem_file + '" ' + credentials + " 'lsof -t -i:" + port + "'" , stderr=subprocess.STDOUT, shell=True).rstrip()
 	print "Service found PID = " + pid
-	subprocess.check_output('ssh -i "' + pem_file + '" ' + credentails + " 'kill -9 $(lsof -t -i:" + port + ")'", stderr=subprocess.STDOUT, shell=True).rstrip()
+	subprocess.check_output('ssh -i "' + pem_file + '" ' + credentials + " 'kill -9 $(lsof -t -i:" + port + ")'", stderr=subprocess.STDOUT, shell=True).rstrip()
 	print "Service killed."
 except subprocess.CalledProcessError, e:
 	if e.returncode == 1:
@@ -70,7 +70,7 @@ except subprocess.CalledProcessError, e:
 print "Syncing Swift core shared objects..."
 
 try:
-	subprocess.check_output('rsync -PazSHAX --rsh "ssh -i ' + pem_file + '" --rsync-path "sudo rsync" ' + os.path.join(shared, "*") + " " + credentails +":/home/ubuntu/swiftx", stderr=subprocess.STDOUT, shell=True)
+	subprocess.check_output('rsync -PazSHAX --rsh "ssh -i ' + pem_file + '" --rsync-path "sudo rsync" ' + os.path.join(shared, "*") + " " + credentials +":/home/ubuntu/swiftx", stderr=subprocess.STDOUT, shell=True)
 except:
 	print "Unexpected error:", sys.exc_info()
 	quit()
@@ -78,7 +78,7 @@ except:
 print "Sending release artifact..."
 
 try:
-	subprocess.check_output('rsync --rsh "ssh -i ' + pem_file + '" --rsync-path "sudo rsync" ./.build/release/swiftX ' + credentails + ":/home/ubuntu/swiftx/release", shell=True)
+	subprocess.check_output('rsync --rsh "ssh -i ' + pem_file + '" --rsync-path "sudo rsync" ./.build/release/swiftX ' + credentials + ":/home/ubuntu/swiftx/release", shell=True)
 except:
 	print "Failed to rsync executable: ", sys.exc_info()
 	quit()
@@ -86,7 +86,7 @@ except:
 print "Starting server..."
 
 try:
-	subprocess.check_output('ssh -i "' + pem_file + '" ' + credentails + " '/home/ubuntu/swiftx/release < /dev/null > /tmp/swiftx_log 2>&1 &'", shell=True)
+	subprocess.check_output('ssh -i "' + pem_file + '" ' + credentials + " '/home/ubuntu/swiftx/release < /dev/null > /tmp/swiftx_log 2>&1 &'", shell=True)
 except:
 	print "Failed to run executable: ", sys.exc_info()
 	quit()
