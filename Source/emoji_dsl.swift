@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class ScopesResponse: Response {
+public class ScopesHtmlResponse: Response {
     
     public init(_ status: Int = Status.ok.rawValue, _ closure: ((Void) -> Void)) {
         
@@ -23,9 +23,19 @@ public class ScopesResponse: Response {
     }
 }
 
+public func html(_ status: Int = Status.ok.rawValue, _ closure: ((Void) -> Void)? = nil) -> ScopesHtmlResponse {
+    return ScopesHtmlResponse(status) {
+        🏷("html") {
+            if let closure = closure {
+                closure()
+            }
+        }
+    }
+}
+
 var labelGlobalBuffer = ""
 
-func 🏷(_ name: String, _ closure: ((Void) -> Void)? = nil) {
+public func 🏷(_ name: String, _ closure: ((Void) -> Void)? = nil) {
     let save = labelGlobalBuffer + "<" + name + ">"
     labelGlobalBuffer = ""
     if let closure = closure {
@@ -34,7 +44,7 @@ func 🏷(_ name: String, _ closure: ((Void) -> Void)? = nil) {
     labelGlobalBuffer = save + labelGlobalBuffer + "</" + name + ">"
 }
 
-func 🏷(_ name: String, inner: String? = nil) {
+public func 🏷(_ name: String, inner: String? = nil) {
     let save = labelGlobalBuffer + "<" + name + ">"
     labelGlobalBuffer = inner ?? ""
     labelGlobalBuffer = save + labelGlobalBuffer + "</" + name + ">"

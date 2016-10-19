@@ -162,24 +162,24 @@ public class HttpIncomingDataPorcessor: Hashable, IncomingDataProcessor {
         
         let lines = data.split(separator: UInt8.lf)
         
-        guard let statusLine = lines.first else {
+        guard let requestLine = lines.first else {
             throw AsyncError.httpError("No status line.")
         }
         
-        let statusLineTokens = statusLine.split(separator: UInt8.space)
+        let requestLineTokens = requestLine.split(separator: UInt8.space)
         
-        guard statusLineTokens.count >= 3 else {
+        guard requestLineTokens.count >= 3 else {
             throw AsyncError.httpError("Invalid status line.")
         }
         
         let request = Request()
 
-        if statusLineTokens[2] == [0x48, 0x54,  0x54,  0x50, 0x2f, 0x31, 0x2e, 0x30] {
+        if requestLineTokens[2] == [0x48, 0x54,  0x54,  0x50, 0x2f, 0x31, 0x2e, 0x30] {
             request.httpVersion = .http10
-        } else if statusLineTokens[2] == [0x48, 0x54,  0x54,  0x50, 0x2f, 0x31, 0x2e, 0x31] {
+        } else if requestLineTokens[2] == [0x48, 0x54,  0x54,  0x50, 0x2f, 0x31, 0x2e, 0x31] {
             request.httpVersion = .http11
         } else {
-            throw AsyncError.parse("Invalid http version: \(statusLineTokens[2])")
+            throw AsyncError.parse("Invalid http version: \(requestLineTokens[2])")
         }
         
         request.headers = lines
@@ -204,22 +204,21 @@ public class HttpIncomingDataPorcessor: Hashable, IncomingDataProcessor {
             request.contentLength = contentLength
         }
         
-        guard let method = String(bytes: statusLineTokens[0], encoding: .ascii) else {
-            throw AsyncError.parse("Invalid 'method' value \(statusLineTokens[0]).")
+        guard let method = String(bytes: requestLineTokens[0], encoding: .ascii) else {
+            throw AsyncError.parse("Invalid 'method' value \(requestLineTokens[0]).")
         }
         
         request.method = method
         
-        guard let path = String(bytes: statusLineTokens[1], encoding: .ascii) else {
-            throw AsyncError.parse("Invalid 'path' value \(statusLineTokens[1]).")
+        guard let path = String(bytes: requestLineTokens[1], encoding: .ascii) else {
+            throw AsyncError.parse("Invalid 'path' value \(requestLineTokens[1]).")
         }
         
-        request.path = path
+        let queryComponents = path.components(separatedBy: "?")
         
-        let queryComponents = request.path.components(separatedBy: "?")
-        
-        if queryComponents.count > 1, let query = queryComponents.last {
-            request.query = query
+        if queryComponents.count > 1, let first = queryComponents.first, let last = queryComponents.last {
+            request.path = first
+            request.query = last
                 .components(separatedBy: "&")
                 .reduce([(String, String)]()) { (c, s) -> [(String, String)] in
                     let tokens = s.components(separatedBy: "=")
@@ -230,6 +229,8 @@ public class HttpIncomingDataPorcessor: Hashable, IncomingDataProcessor {
                     }
                 return c
             }
+        } else {
+            request.path = path
         }
         
         return request
