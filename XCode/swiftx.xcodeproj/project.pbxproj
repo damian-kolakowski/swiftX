@@ -15,14 +15,16 @@
 		7C18A0561DAD61F800D003C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CC384E21D7940AC00CE9D2D /* Main.storyboard */; };
 		7C18A0571DAD61FC00D003C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CC384E01D7940AC00CE9D2D /* LaunchScreen.storyboard */; };
 		7C253E2B1D9BAE3600EE2A01 /* websocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C253E2A1D9BAE3600EE2A01 /* websocket.swift */; };
-		7C2CF2FC1DAE702A004B585A /* emoji_dsl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2CF2FB1DAE702A004B585A /* emoji_dsl.swift */; };
-		7C2CF2FD1DAE702A004B585A /* emoji_dsl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2CF2FB1DAE702A004B585A /* emoji_dsl.swift */; };
+		7C2CF2FC1DAE702A004B585A /* html.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2CF2FB1DAE702A004B585A /* html.swift */; };
+		7C2CF2FD1DAE702A004B585A /* html.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C2CF2FB1DAE702A004B585A /* html.swift */; };
 		7C3A6CB51DAB7F7C003EC575 /* base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A6CB41DAB7F7C003EC575 /* base64.swift */; };
 		7C3A6CB61DAB7F7C003EC575 /* base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A6CB41DAB7F7C003EC575 /* base64.swift */; };
 		7C3A6CB81DAB7FA1003EC575 /* sha1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A6CB71DAB7FA1003EC575 /* sha1.swift */; };
 		7C3A6CB91DAB7FA1003EC575 /* sha1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A6CB71DAB7FA1003EC575 /* sha1.swift */; };
 		7C437F021DA412CC0027B207 /* http.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C437F011DA412CC0027B207 /* http.swift */; };
 		7C437F041DA412EB0027B207 /* net.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C437F031DA412EB0027B207 /* net.swift */; };
+		7C454AA11DB7D86F0044B5DB /* multipart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C454AA01DB7D86F0044B5DB /* multipart.swift */; };
+		7C454AA21DB7D86F0044B5DB /* multipart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C454AA01DB7D86F0044B5DB /* multipart.swift */; };
 		7CB915DA1D91151C005B0484 /* json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB915D91D91151C005B0484 /* json.swift */; };
 		7CB915DC1D911552005B0484 /* error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB915DB1D911552005B0484 /* error.swift */; };
 		7CC384F51D79410E00CE9D2D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC384E71D7940AC00CE9D2D /* main.swift */; };
@@ -53,12 +55,13 @@
 /* Begin PBXFileReference section */
 		7C253E2A1D9BAE3600EE2A01 /* websocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = websocket.swift; sourceTree = "<group>"; };
 		7C2779DC1D6F532D0037551D /* macos */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = macos; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C2CF2FB1DAE702A004B585A /* emoji_dsl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = emoji_dsl.swift; sourceTree = "<group>"; };
+		7C2CF2FB1DAE702A004B585A /* html.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = html.swift; sourceTree = "<group>"; };
 		7C36DA541D76CCF0008C7B6B /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C3A6CB41DAB7F7C003EC575 /* base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = base64.swift; sourceTree = "<group>"; };
 		7C3A6CB71DAB7FA1003EC575 /* sha1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sha1.swift; sourceTree = "<group>"; };
 		7C437F011DA412CC0027B207 /* http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = http.swift; sourceTree = "<group>"; };
 		7C437F031DA412EB0027B207 /* net.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = net.swift; sourceTree = "<group>"; };
+		7C454AA01DB7D86F0044B5DB /* multipart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = multipart.swift; sourceTree = "<group>"; };
 		7CB915D91D91151C005B0484 /* json.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = json.swift; sourceTree = "<group>"; };
 		7CB915DB1D911552005B0484 /* error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = error.swift; sourceTree = "<group>"; };
 		7CC384DE1D7940AC00CE9D2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -135,6 +138,8 @@
 		7CC384FB1D7941B800CE9D2D /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				7C2CF2FB1DAE702A004B585A /* html.swift */,
+				7C454AA01DB7D86F0044B5DB /* multipart.swift */,
 				7CC384FE1D7941B800CE9D2D /* misc.swift */,
 				7CC384FC1D7941B800CE9D2D /* net_linux.swift */,
 				7CC384FD1D7941B800CE9D2D /* net_macos.swift */,
@@ -146,7 +151,6 @@
 				7C253E2A1D9BAE3600EE2A01 /* websocket.swift */,
 				7C3A6CB41DAB7F7C003EC575 /* base64.swift */,
 				7C3A6CB71DAB7FA1003EC575 /* sha1.swift */,
-				7C2CF2FB1DAE702A004B585A /* emoji_dsl.swift */,
 			);
 			name = Source;
 			path = ../Source;
@@ -245,7 +249,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C2CF2FC1DAE702A004B585A /* emoji_dsl.swift in Sources */,
+				7C2CF2FC1DAE702A004B585A /* html.swift in Sources */,
 				7CC385001D7941B800CE9D2D /* net_linux.swift in Sources */,
 				7CC385061D7941B800CE9D2D /* server.swift in Sources */,
 				7CC385041D7941B800CE9D2D /* misc.swift in Sources */,
@@ -255,6 +259,7 @@
 				7C253E2B1D9BAE3600EE2A01 /* websocket.swift in Sources */,
 				7C3A6CB51DAB7F7C003EC575 /* base64.swift in Sources */,
 				7CB915DA1D91151C005B0484 /* json.swift in Sources */,
+				7C454AA11DB7D86F0044B5DB /* multipart.swift in Sources */,
 				7CB915DC1D911552005B0484 /* error.swift in Sources */,
 				7C3A6CB81DAB7FA1003EC575 /* sha1.swift in Sources */,
 				7C437F021DA412CC0027B207 /* http.swift in Sources */,
@@ -272,9 +277,10 @@
 				7CC385011D7941B800CE9D2D /* net_linux.swift in Sources */,
 				7C18A0541DAD614500D003C4 /* http.swift in Sources */,
 				7CC385071D7941B800CE9D2D /* server.swift in Sources */,
+				7C454AA21DB7D86F0044B5DB /* multipart.swift in Sources */,
 				7CC385031D7941B800CE9D2D /* net_macos.swift in Sources */,
 				7C18A0551DAD614B00D003C4 /* json.swift in Sources */,
-				7C2CF2FD1DAE702A004B585A /* emoji_dsl.swift in Sources */,
+				7C2CF2FD1DAE702A004B585A /* html.swift in Sources */,
 				7CC384F71D79411700CE9D2D /* ViewController.swift in Sources */,
 				7C18A0511DAD613900D003C4 /* error.swift in Sources */,
 				7C18A0531DAD614200D003C4 /* net.swift in Sources */,
