@@ -47,10 +47,18 @@ public class SQLite {
         
         let pointer = UnsafeMutableRawPointer(Unmanaged.passRetained(self).toOpaque())
         
+        #if os(Linux)
+        var thread: pthread_t = 0
+        #else
         var thread: pthread_t? = nil
-        
+        #endif
+
         guard pthread_create(&thread, nil, {
+            #if os(Linux)
+            let unmanaged = Unmanaged<SQLite>.fromOpaque($0!)
+            #else
             let unmanaged = Unmanaged<SQLite>.fromOpaque($0)
+            #endif
             let worker = unmanaged.takeUnretainedValue()
             while true {
                 pthread_mutex_lock(&worker.mutx)
