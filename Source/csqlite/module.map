@@ -1,0 +1,4 @@
+module csqlite {
+    umbrella header "include/sqlite.h"
+    export *
+}
