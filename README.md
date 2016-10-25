@@ -17,14 +17,27 @@ while true {
     }
 }
 ```
-Demo [Guest Book](http://138.68.93.146:8080)
-
-Emoji DSL
+### HTML
 ```swift
-🦄(port: 8080) { 
-    🚀($0, "hello") 
+let server = try Server()
+while true {
+    try server.serve { request, responder in 
+        responder(html ~ {
+            "body" ~ {
+                "h1" ~ "hello"
+                for _ in 1...10 { 
+                    "h1" ~ "💕"
+                }
+            }
+        })
+    }
 }
 ```
+### Demo 
+
+[SQLite Database Viewer](http://138.68.93.146:8080)
+
+[Guest Book](http://138.68.93.146:8081)
 
 Amazon Deploy
 ```shell
