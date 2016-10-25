@@ -17,6 +17,8 @@ while true {
     }
 }
 ```
+Demo [Guest Book](http://138.68.93.146:8080)
+
 Emoji DSL
 ```swift
 🦄(port: 8080) { 
@@ -35,4 +37,5 @@ Digital Ocean Deploy
 # ./deploy_to_digital_ocean <address> <port>
 $ ./deploy_to_digital_ocean root@1.2.3.4 8080
 ```
+
 🕊 Roadmap: Tests. Docker.
