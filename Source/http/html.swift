@@ -9,7 +9,7 @@ import Foundation
 
 var globalBuffer = [UInt64: [UInt8]]()
 
-public func html(_ status: Int = Status.ok.rawValue, _ closure: ((Void) -> Void)? = nil) -> ScopesHtmlResponse {
+public func html(_ status: Int = Status.ok.rawValue, _ closure: (() -> Void)? = nil) -> ScopesHtmlResponse {
     return ScopesHtmlResponse(status) {
         globalBuffer[Process.tid] = [UInt8]()
         globalBuffer[Process.tid]?.reserveCapacity(1024)
@@ -24,7 +24,7 @@ public func html(_ status: Int = Status.ok.rawValue, _ closure: ((Void) -> Void)
 
 public class ScopesHtmlResponse: Response {
     
-    public init(_ status: Int = Status.ok.rawValue, _ closure: ((Void) -> Void)) {
+    public init(_ status: Int = Status.ok.rawValue, _ closure: (() -> Void)) {
         
         super.init(status)
         
@@ -42,7 +42,7 @@ public class ScopesHtmlResponse: Response {
 
 infix operator ~
 
-func ~ (_ left: String, _ closure: ((Void) -> Void)?) {
+func ~ (_ left: String, _ closure: (() -> Void)?) {
     
     globalBuffer[Process.tid]?.append(UInt8.lessThan)
     

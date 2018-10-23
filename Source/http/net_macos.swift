@@ -11,7 +11,7 @@ import Foundation
 
 public class MacOSAsyncTCPServer: TcpServer {
     
-    private var backlog = Dictionary<Int32, Array<(chunk: [UInt8], done: ((Void) -> TcpWriteDoneAction))>>()
+    private var backlog = Dictionary<Int32, Array<(chunk: [UInt8], done: (() -> TcpWriteDoneAction))>>()
     private var peers = Set<Int32>()
     
     private let kernelQueue: KernelQueue
@@ -26,7 +26,7 @@ public class MacOSAsyncTCPServer: TcpServer {
         self.kernelQueue.subscribe(server, .read)
     }
     
-    public func write(_ socket: Int32, _ data: Array<UInt8>, _ done: @escaping ((Void) -> TcpWriteDoneAction)) throws {
+    public func write(_ socket: Int32, _ data: Array<UInt8>, _ done: @escaping (() -> TcpWriteDoneAction)) throws {
         
         let result = Darwin.write(socket, data, data.count)
         

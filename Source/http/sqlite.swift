@@ -17,7 +17,7 @@ public class SQLite {
     private var mutx = pthread_mutex_t()
     private var cond = pthread_cond_t()
     
-    private var jobs = Array<((Void) -> Void)>()
+    private var jobs = Array<(() -> Void)>()
     
     private let databaseConnection: OpaquePointer
     
@@ -86,7 +86,7 @@ public class SQLite {
         sqlite3_close(self.databaseConnection)
     }
     
-    public func schedule(_ closuer: @escaping ((Void) -> Void)) {
+    public func schedule(_ closuer: @escaping (() -> Void)) {
         pthread_mutex_lock(&self.mutx)
         self.jobs.append(closuer)
         pthread_mutex_unlock(&self.mutx)
@@ -111,13 +111,13 @@ public class SQLite {
         
         for (index, value) in (params ?? [String?]()).enumerated() {
             
-            let bindResult = value?
-                .withCString({ sqlite3_bind_text(statement, index + 1, $0, -1 /* take zero terminator. */) { _ in } })
-                    ?? sqlite3_bind_null(statement, index + 1)
-            
-            guard bindResult == SQLITE_OK else {
-                throw SQLiteError.error(String(cString: sqlite3_errmsg(databaseConnection)))
-            }
+//            let bindResult = value?
+//                .withCString({ sqlite3_bind_text(statement, index + 1, $0, -1 /* take zero terminator. */) { _ in } })
+//                    ?? sqlite3_bind_null(statement, index + 1)
+//            
+//            guard bindResult == SQLITE_OK else {
+//                throw SQLiteError.error(String(cString: sqlite3_errmsg(databaseConnection)))
+//            }
         }
         
         var content = [String: String?]()

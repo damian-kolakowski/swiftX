@@ -13,7 +13,7 @@ public protocol TcpServer {
     
     func wait(_ callback: ((TcpServerEvent) -> Void)) throws
     
-    func write(_ socket: Int32, _ data: Array<UInt8>, _ done: @escaping ((Void) -> TcpWriteDoneAction)) throws
+    func write(_ socket: Int32, _ data: Array<UInt8>, _ done: @escaping (() -> TcpWriteDoneAction)) throws
     
     func finish(_ socket: Int32)
 }
